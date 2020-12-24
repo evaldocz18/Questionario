@@ -1,23 +1,42 @@
 import 'package:flutter/material.dart';
+import './resposta.dart';
+import './questao.dart';
 
 void main() => runApp(PerguntaApp());
 
-class PerguntaAppState extends State<PerguntaApp> {
-  var perguntaSelecionada = 0;
+class _PerguntaAppState extends State<PerguntaApp> {
+  var _perguntaSelecionada = 0;
 
-  void responder() {
+  void _responder() {
     setState(() {
-      perguntaSelecionada++;
+      _perguntaSelecionada++;
     });
-    print(perguntaSelecionada);
+    print(_perguntaSelecionada);
   }
 
   @override
   Widget build(BuildContext context) {
-    final perguntas = [
-      'Qual é a sua cor favorita',
-      'Qual é o seu animal favorito',
+    final List<Map<String, Object>> perguntas = [
+      {
+        'texto': 'Qual é a sua cor favorita?',
+        'respostas': ['Preto', 'Vermelho', 'Verde', 'Branco'],
+      },
+      {
+        'texto': 'Qual é a seu animal favorito?',
+        'respostas': ['Coelho', 'Cobra', 'Elefante', 'Leão'],
+      },
+      {
+        'texto': 'Qual o seu instrutor favorito?',
+        'respostas': ['Maria', 'João', 'Leo', 'Pedro'],
+      }
     ];
+
+    List<Widget> respostas = [];
+
+    for (String textoResp in perguntas[_perguntaSelecionada]['respostas']) {
+      respostas.add(Resposta(textoResp, _responder));
+    }
+
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -25,10 +44,8 @@ class PerguntaAppState extends State<PerguntaApp> {
         ),
         body: Column(
           children: <Widget>[
-            Text(perguntas[perguntaSelecionada]),
-            RaisedButton(child: Text('Resposta 1'), onPressed: responder),
-            RaisedButton(child: Text('Resposta 2'), onPressed: responder),
-            RaisedButton(child: Text('Resposta 3'), onPressed: responder),
+            Questao(perguntas[_perguntaSelecionada]['texto']),
+            ...respostas,
           ],
         ),
       ),
@@ -38,5 +55,5 @@ class PerguntaAppState extends State<PerguntaApp> {
 
 class PerguntaApp extends StatefulWidget {
   @override
-  PerguntaAppState createState() => PerguntaAppState();
+  _PerguntaAppState createState() => _PerguntaAppState();
 }
