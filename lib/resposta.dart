@@ -5,6 +5,7 @@ class Resposta extends StatelessWidget {
   final void Function() quandoSelecionado;
 
   Resposta(this.texto, this.quandoSelecionado);
+  
 
   @override
   Widget build(BuildContext context) {
@@ -19,3 +20,4 @@ class Resposta extends StatelessWidget {
     );
   }
 }
+
